@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1: Spam Message Classification</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script>
+        // JavaScript function to handle form submission via AJAX
+        async function handleSubmit(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Get the form values
+            const formData = new FormData(event.target);
+            const message = formData.get("message");
+            const model = formData.get("model");
+
+            try {
+                // Send a POST request to the FastAPI server with the form data
+                const response = await fetch("/predict/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: new URLSearchParams({ message, model }),
+                });
+
+                // Parse the JSON response
+                const result = await response.json();
+
+                // Get the result display div and update it with the response
+                const resultDiv = document.getElementById("result");
+                if (response.ok) {
+                    resultDiv.innerHTML = `<p><strong>Prediction: <br></strong> ${result.prediction}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${result.error}</p>`;
+                }
+            } catch (error) {
+                // Handle any errors that occur during the fetch
+                document.getElementById("result").innerHTML = `<p style="color: red;">Error: Unable to process the request.</p>`;
+                console.error("Error:", error);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>Project 1: Spam Message Classification</h1>
+        <nav>
+            <a href="#">Blog</a>
+            <a href="#">GitHub</a>
+            <a href="#">My Profile</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="description">
+            <p>We can determine if a message is spam or not.</p>
+            <p>Please paste the message below and press the submit button to evaluate it.</p>
+        </div>
+
+        <form onsubmit="handleSubmit(event)">
+            <textarea name="message" placeholder="Paste your message here..." required></textarea>
+
+            <div class="model-selection">
+                <label>
+                    <input type="radio" name="model" value="model_random_Forest_Classifier.pkl" required> Random Forest
+                </label><br>
+                <label>
+                    <input type="radio" name="model" value="model_svm.pkl"> Support Vector Machine
+                </label>
+            </div>
+
+            <div class="button">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+
+        <div id="result" class="result-display">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+
+    <footer>
+        <p>If you like this project, give it a ⭐!</p>
+        <p class="stars">⭐ ⭐ ⭐ ⭐ ⭐</p>
+    </footer>
+</body>
+
+</html>
