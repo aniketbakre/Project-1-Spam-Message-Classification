@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 import numpy as np
 # from fastapi.middleware.cors import CORSMiddleware
 import joblib
+import os
 
 # Initializing FastAPI app
 app = FastAPI()
