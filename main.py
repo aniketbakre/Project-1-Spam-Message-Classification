@@ -15,12 +15,16 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # Setup Jinja2 templates
 templates = Jinja2Templates(directory="templates")
 
+# Get the absolute path of the directory containing this file
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELS_DIR = os.path.join(BASE_DIR, "models")
+
 # Load model
 try:
-    rf_model = joblib.load("models/model_random_Forest_Classifier.pkl")
-    svm_model = joblib.load("models/model_svm.pkl")
+    rf_model = joblib.load(os.path.join(MODELS_DIR, "model_random_Forest_Classifier.pkl"))
+    svm_model = joblib.load(os.path.join(MODELS_DIR, "model_svm.pkl"))
 except FileNotFoundError as e:
-    raise FileNotFoundError(r"Model file not found in the 'models' directory: {e}")
+    raise FileNotFoundError(f"Model file not found in the 'models' directory: {e}")
 
 # Home route for HTML
 @app.get("/", response_class = HTMLResponse)
