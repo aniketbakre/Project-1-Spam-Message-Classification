@@ -3,6 +3,8 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import numpy as np
+import os
+
 # from fastapi.middleware.cors import CORSMiddleware
 import joblib
 
