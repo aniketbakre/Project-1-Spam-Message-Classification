@@ -17,8 +17,8 @@ templates = Jinja2Templates(directory="templates")
 
 # Load model
 try:
-    rf_model = joblib.load("models/model_random_Forest_Classifier.pkl")
-    svm_model = joblib.load("models/model_svm.pkl")
+    rf_model = joblib.load("./models/model_random_Forest_Classifier.pkl")
+    svm_model = joblib.load("./models/model_svm.pkl")
 except FileNotFoundError as e:
     raise FileNotFoundError(r"Model file not found in the 'models' directory: {e}")
 
