@@ -22,7 +22,7 @@ MODELS_DIR = os.path.join(BASE_DIR, "models")
 
 # Load model
 try:
-    rf_model = joblib.load(os.path.join(MODELS_DIR, "model_random_Forest_Classifier.pkl"))
+    rf_model = joblib.load(os.path.join(MODELS_DIR, "model_Random_Forest_Classifier.pkl"))
     svm_model = joblib.load(os.path.join(MODELS_DIR, "model_svm.pkl"))
 except FileNotFoundError as e:
     raise FileNotFoundError(f"Model file not found in the 'models' directory: {e}")
